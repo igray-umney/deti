@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Родительский уголок - Развитие ребенка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 15px;
+            color: #5a6c7d;
+            line-height: 1.5;
+            margin-bottom: 35px;
+        }
+
+        .join-button {
+            background: linear-gradient(45deg, #0088cc, #0099dd);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        .join-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            background: linear-gradient(45deg, #0077bb, #0088cc);
+        }
+
+        .join-button:active {
+            transform: translateY(0);
+        }
+
+        .telegram-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #5a6c7d;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 25px 0;
+            padding: 20px 0;
+            border-top: 1px solid #ecf0f1;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+            }
+        }
+
+        /* Админ панель для смены ссылки */
+        .admin-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #34495e;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1001;
+        }
+
+        .admin-input {
+            width: 250px;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .admin-button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="avatar">👨‍👩‍👧‍👦</div>
+        
+        <h1 class="title">Родительский уголок</h1>
+        <p class="subtitle">Развитие ребенка</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">51k+</span>
+                <span class="stat-label">Подписчиков</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Материалов</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Поддержка</span>
+            </div>
+        </div>
+        
+        <p class="description">
+            Универсальный гид для родителей: всё о воспитании и развитии детей в одном месте! 
+            Получите доступ к проверенным методикам, играм и советам экспертов.
+        </p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                Бесплатные методики развития
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                Развивающие игры и упражнения
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                Советы детских психологов
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                Ежедневные полезные материалы
+            </div>
+        </div>
+        
+        <a href="#" class="join-button" id="joinButton">
+            <span class="telegram-icon">📱</span>
+            Присоединиться к каналу
+        </a>
+    </div>
+
+    <!-- Админ панель -->
+    <button class="admin-toggle" onclick="toggleAdmin()">⚙</button>
+    <div class="admin-panel" id="adminPanel">
+        <div style="margin-bottom: 10px; font-weight: bold; font-size: 14px;">Настройки ссылки:</div>
+        <input type="text" class="admin-input" id="linkInput" placeholder="Введите новую ссылку Telegram">
+        <button class="admin-button" onclick="updateLink()">Обновить</button>
+        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+            Текущая ссылка: <span id="currentLink">https://t.me/+6ervEYxDo69kYTY6</span>
+        </div>
+    </div>
+
+    <script>
+        // Текущая ссылка (по умолчанию из ваших скриншотов)
+        let currentTelegramLink = 'https://t.me/+6ervEYxDo69kYTY6';
+        
+        // Устанавливаем ссылку при загрузке
+        document.getElementById('joinButton').href = currentTelegramLink;
+        document.getElementById('currentLink').textContent = currentTelegramLink;
+        
+        // Функция для переключения админ панели
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
+        }
+        
+        // Функция для обновления ссылки
+        function updateLink() {
+            const newLink = document.getElementById('linkInput').value.trim();
+            
+            if (newLink && (newLink.startsWith('https://t.me/') || newLink.startsWith('http://t.me/'))) {
+                currentTelegramLink = newLink;
+                document.getElementById('joinButton').href = currentTelegramLink;
+                document.getElementById('currentLink').textContent = currentTelegramLink;
+                document.getElementById('linkInput').value = '';
+                
+                // Сохраняем в localStorage для сохранения между сессиями
+                localStorage.setItem('telegramLink', currentTelegramLink);
+                
+                alert('Ссылка успешно обновлена!');
+                toggleAdmin();
+            } else {
+                alert('Пожалуйста, введите корректную ссылку Telegram (должна начинаться с https://t.me/)');
+            }
+        }
+        
+        // Загружаем сохраненную ссылку при загрузке страницы
+        window.addEventListener('load', function() {
+            const savedLink = localStorage.getItem('telegramLink');
+            if (savedLink) {
+                currentTelegramLink = savedLink;
+                document.getElementById('joinButton').href = currentTelegramLink;
+                document.getElementById('currentLink').textContent = currentTelegramLink;
+            }
+        });
+        
+        // Обработка клика по кнопке присоединения
+        document.getElementById('joinButton').addEventListener('click', function(e) {
+            // Добавляем небольшую задержку для лучшего UX
+            setTimeout(() => {
+                window.location.href = currentTelegramLink;
+            }, 100);
+        });
+        
+        // Закрытие админ панели при клике вне её
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('adminPanel');
+            const toggle = document.querySelector('.admin-toggle');
+            
+            if (panel.style.display === 'block' && 
+                !panel.contains(e.target) && 
+                !toggle.contains(e.target)) {
+                panel.style.display = 'none';
+            }
+        });
+        
+        // Обработка Enter в поле ввода
+        document.getElementById('linkInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                updateLink();
+            }
+        });
+    </script>
+</body>
+</html>
