@@ -191,52 +191,7 @@
             }
         }
 
-        /* Админ панель для смены ссылки */
-        .admin-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.95);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            display: none;
-            z-index: 1000;
-        }
 
-        .admin-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #34495e;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 1001;
-        }
-
-        .admin-input {
-            width: 250px;
-            padding: 8px 12px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .admin-button {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 5px;
-        }
     </style>
 </head>
 <body>
@@ -291,20 +246,11 @@
         </a>
     </div>
 
-    <!-- Админ панель -->
-    <button class="admin-toggle" onclick="toggleAdmin()">⚙</button>
-    <div class="admin-panel" id="adminPanel">
-        <div style="margin-bottom: 10px; font-weight: bold; font-size: 14px;">Настройки ссылки:</div>
-        <input type="text" class="admin-input" id="linkInput" placeholder="Введите новую ссылку Telegram">
-        <button class="admin-button" onclick="updateLink()">Обновить</button>
-        <div style="margin-top: 10px; font-size: 12px; color: #666;">
-            Текущая ссылка: <span id="currentLink">https://t.me/+6ervEYxDo69kYTY6</span>
-        </div>
-    </div>
-
     <script>
-        // Текущая ссылка (по умолчанию из ваших скриншотов)
+        // ============ НАСТРОЙКА ССЫЛКИ ============
+        // Для смены ссылки просто измените значение ниже:
         let currentTelegramLink = 'https://t.me/+6ervEYxDo69kYTY6';
+        // =========================================
         
         // Функция определения встроенного браузера TikTok
         function isTikTokBrowser() {
@@ -328,33 +274,8 @@
         
         // Устанавливаем ссылку при загрузке
         document.getElementById('joinButton').href = currentTelegramLink;
-        document.getElementById('currentLink').textContent = currentTelegramLink;
         
-        // Функция для переключения админ панели
-        function toggleAdmin() {
-            const panel = document.getElementById('adminPanel');
-            panel.style.display = panel.style.display === 'none' || !panel.style.display ? 'block' : 'none';
-        }
-        
-        // Функция для обновления ссылки
-        function updateLink() {
-            const newLink = document.getElementById('linkInput').value.trim();
-            
-            if (newLink && (newLink.startsWith('https://t.me/') || newLink.startsWith('http://t.me/'))) {
-                currentTelegramLink = newLink;
-                document.getElementById('joinButton').href = currentTelegramLink;
-                document.getElementById('currentLink').textContent = currentTelegramLink;
-                document.getElementById('linkInput').value = '';
-                
-                // Сохраняем в localStorage для сохранения между сессиями
-                localStorage.setItem('telegramLink', currentTelegramLink);
-                
-                alert('Ссылка успешно обновлена!');
-                toggleAdmin();
-            } else {
-                alert('Пожалуйста, введите корректную ссылку Telegram (должна начинаться с https://t.me/)');
-            }
-        }
+
         
         // Функция показа инструкций для выхода в браузер
         function showBrowserInstructions() {
@@ -446,13 +367,6 @@
         
         // Автоматическая попытка открыть в браузере при загрузке
         window.addEventListener('load', function() {
-            const savedLink = localStorage.getItem('telegramLink');
-            if (savedLink) {
-                currentTelegramLink = savedLink;
-                document.getElementById('joinButton').href = currentTelegramLink;
-                document.getElementById('currentLink').textContent = currentTelegramLink;
-            }
-            
             // Если мы во встроенном браузере TikTok, показываем уведомление
             if (isTikTokBrowser()) {
                 setTimeout(() => {
@@ -495,25 +409,7 @@
                 window.open(currentTelegramLink, '_blank');
             }
         });
-        
-        // Закрытие админ панели при клике вне её
-        document.addEventListener('click', function(e) {
-            const panel = document.getElementById('adminPanel');
-            const toggle = document.querySelector('.admin-toggle');
-            
-            if (panel.style.display === 'block' && 
-                !panel.contains(e.target) && 
-                !toggle.contains(e.target)) {
-                panel.style.display = 'none';
-            }
-        });
-        
-        // Обработка Enter в поле ввода
-        document.getElementById('linkInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                updateLink();
-            }
-        });
+
     </script>
 </body>
 </html>
